@@ -11,9 +11,12 @@
         $password = $_POST['password'];
         $user_name = $_POST['user_name'];
 
-        $values = array('u_name' => 'user_name', 'u_gender' => 'user_gender', 'u_class' => 'user_class', 'u_password' => 'password', 'u_gmail' => 'user_gmail');
+        $values = array('u_name' => $user_name, 'u_gender' => $user_gender, 'u_class' => $user_class, 'u_password' => $password, 'u_gmail' => $user_gmail);
 
         $query = $fluent->insertInto('users', $values)->execute();
+        $fluent->close();
+
+        header("Location: table.php");
     }
 
 ?>
@@ -36,7 +39,7 @@
             </div>
 
             <div class="form-group">
-                <label for="inputName">Email address</label>
+                <label for="inputName">UserName</label>
                 <input type="text" class="form-control w-25" id="inputName" name="user_name"aria-describedby="emailHelp" placeholder="Enter Name" required >
             </div>
 
