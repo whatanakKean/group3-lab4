@@ -11,7 +11,7 @@
         $password = $_POST['password'];
         $user_name = $_POST['user_name'];
 
-        $values = array('u_name' => 'user_name', 'u_gender' => 'user_gender', 'ú_class' => 'user_class', 'ú_password' => 'password', 'u_gmail' => 'user_gmail');
+        $values = array('u_name' => 'user_name', 'u_gender' => 'user_gender', 'u_class' => 'user_class', 'u_password' => 'password', 'u_gmail' => 'user_gmail');
 
         $query = $fluent->insertInto('users', $values)->execute();
     }
