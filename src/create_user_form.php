@@ -1,8 +1,7 @@
 <?php
 
     require '../vendor/autoload.php';
-    $pdo = new PDO('mysql:host=localhost:3308;dbname=lab4', 'root', '');
-    $fluent = new \Envms\FluentPDO\Query($pdo);
+    include("connection.php");  
 
     if($_SERVER['REQUEST_METHOD'] == "POST"){
         $user_gmail = $_POST['user_gmail'];
@@ -16,7 +15,7 @@
         $query = $fluent->insertInto('users', $values)->execute();
         $fluent->close();
 
-        header("Location: table.php");
+        // header("Location: table.php");
     }
 
 ?>
@@ -55,9 +54,9 @@
             <div class="form-group">
                 <label for="inputClass">Class</label><br>
                 <select class="form-select" name="user_class" aria-label="Default select example" id="inputClass" required>
-                    <option value="Computer Science">CS</option>
-                    <option value="Telecom Network">TN</option>
-                    <option value="E-Commerce">EC</option>
+                    <option value="CS">CS</option>
+                    <option value="TN">TN</option>
+                    <option value="EC">EC</option>
                 </select>
             </div>
 
