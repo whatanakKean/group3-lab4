@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Group3\\Lab4\\' => array($baseDir . '/src'),
+    'Envms\\FluentPDO\\' => array($vendorDir . '/envms/fluentpdo/src'),
 );
