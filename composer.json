@@ -1,0 +1,11 @@
+{
+    "name": "group3/lab4",
+    "description": "Lab4 Practice",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Group3\\Lab4\\": "src/"
+        }
+    },
+    "require": {}
+}
