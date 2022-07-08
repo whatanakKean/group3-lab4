@@ -1,7 +1,10 @@
 <?php
 
-    require '../vendor/autoload.php';
     include("connection.php");  
+
+    $sql = "SELECT * FROM users";
+    $result = mysqli_query($conn, $sql);
+    $resultCheck = mysqli_num_rows($result);
 
     if($_SERVER['REQUEST_METHOD'] == "POST"){
         $user_gmail = $_POST['user_gmail'];
@@ -10,12 +13,23 @@
         $password = $_POST['password'];
         $user_name = $_POST['user_name'];
 
-        $values = array('u_name' => $user_name, 'u_gender' => $user_gender, 'u_class' => $user_class, 'u_password' => $password, 'u_gmail' => $user_gmail);
+        if($resultCheck > 0){
+            while($row = mysqli_fetch_assoc($result)){
+                if($user_gmail == $row['u_gmail']){
+                    echo "USER EXIST!!!!";
+                    break;
+                }
+                else{
+                    $values = array('u_name' => $user_name, 'u_gender' => $user_gender, 'u_class' => $user_class, 'u_password' => $password, 'u_gmail' => $user_gmail);
 
-        $query = $fluent->insertInto('users', $values)->execute();
-        $fluent->close();
+                    
+                    $query = $fluent->insertInto('users', $values)->execute();
+                    $fluent->close();
 
-        // header("Location: table.php");
+                    header("Location: login.php");
+                }
+            }
+        }
     }
 
 ?>
@@ -30,7 +44,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-<div style="padding: 30px 0px 0px 45px;">
+
+    <h1 style="margin: 30px 0px 0px 45px;">Sign Up</h1>
+    <div style="padding: 30px 0px 0px 45px;">
         <form action="" method="POST" style="margin-bottom: 10px;">
             <div class="form-group">
                 <label for="inputEmail1">Email address</label>
@@ -67,6 +83,8 @@
             <button type="submit" class="btn btn-primary mr-2">Submit</button>
             <button type="reset" class="btn btn-primary">Reset</button>
         </form>
+        <a href="login.php">Click to Login</a>
     </div>
+
 </body>
 </html>
