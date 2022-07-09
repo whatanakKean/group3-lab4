@@ -12,22 +12,22 @@
         $user_class = $_POST['user_class'];
         $password = $_POST['password'];
         $user_name = $_POST['user_name'];
+        $flag = 0;
 
         if($resultCheck > 0){
             while($row = mysqli_fetch_assoc($result)){
                 if($user_gmail == $row['u_gmail']){
-                    echo "USER EXIST!!!!";
+                    $flag = 1;
                     break;
                 }
-                else{
-                    $values = array('u_name' => $user_name, 'u_gender' => $user_gender, 'u_class' => $user_class, 'u_password' => $password, 'u_gmail' => $user_gmail);
-
-                    
-                    $query = $fluent->insertInto('users', $values)->execute();
-                    $fluent->close();
-
-                    header("Location: login.php");
-                }
+            }
+            if($flag == 0){
+                echo "hello?";
+                $values = array('u_name' => $user_name, 'u_gender' => $user_gender, 'u_class' => $user_class, 'u_password' => $password, 'u_gmail' => $user_gmail);
+                
+                $query = $fluent->insertInto('users', $values)->execute();
+    
+                header("Location: login.php");
             }
         }
     }

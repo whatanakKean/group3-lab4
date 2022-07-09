@@ -11,21 +11,23 @@
         $product_amount = $_POST['product_amount'];
         $product_price = $_POST['product_price'];
         $user_id = $_SESSION['user_id'];
+        $flag = 0;
 
         if($resultCheck > 0){
             while($row = mysqli_fetch_assoc($result)){
                 if($product_name == $row['p_name'] && $user_id == $row['u_id']){
                     echo "PRODUCT EXIST!!!! *POP UP* <br> choose update to update product information";
+                    $flag = 1;
                     break;
                 }
-                else{
-                    $values = array('p_name' => $product_name, 'u_id' => $user_id,'p_amount' => $product_amount, 'p_price' => $product_price);
+            }
+            if($flag == 0){
+                $values = array('p_name' => $product_name, 'u_id' => $user_id,'p_amount' => $product_amount, 'p_price' => $product_price);
 
-                    $query = $fluent->insertInto('products', $values)->execute();
-                    $fluent->close();
-            
-                    header("Location: table.php");
-                }
+                $query = $fluent->insertInto('products', $values)->execute();
+                $fluent->close();
+        
+                header("Location: table.php");
             }
         }
     }
@@ -51,12 +53,12 @@
 
             <div class="form-group">
                 <label for="inputName">Product Amount</label>
-                <input type="text" class="form-control w-25" id="inputProductAmount" name="product_amount" placeholder="Product amount" required >
+                <input type="number" class="form-control w-25" id="inputProductAmount" name="product_amount" placeholder="Product amount" required >
             </div>
 
             <div class="form-group">
                 <label for="inputProductPrice">Product Price</label>
-                <input type="text" class="form-control w-25" id="inputProductPrice" name="product_price" placeholder="Product price" required >
+                <input type="number" step=".01" class="form-control w-25" id="inputProductPrice" name="product_price" placeholder="Product price" required >
             </div>
 
             <button type="submit" class="btn btn-primary mr-2">Submit</button>
