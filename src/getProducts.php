@@ -1,14 +1,18 @@
 <?php
 
 require('connection.php');
+session_start();
 
 
 $sql = "SELECT * FROM products";
 $result = $conn->query($sql);
+$user_id = $_SESSION['user_id'];
 
 
 while($row = $result->fetch_array(MYSQLI_ASSOC)){
-  $data[] = $row;
+	if($row['u_id'] == $user_id){
+		$data[] = $row;
+	}
 }
 
 

@@ -20,4 +20,13 @@
     //         while($row = mysqli_fetch_assoc($result));
     //     }
     // }
+
+    // $pdoQuery = "SELECT * FROM users";
+    // $pdoQuery_run = $pdo->query($pdoQuery);
+    
+    // while($row = $pdoQuery_run->fetch()){
+    //     var_dump($row);
+    //     echo $row->u_gmail;
+    //     echo "<br>";
+    // }
 ?>

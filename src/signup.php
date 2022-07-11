@@ -2,9 +2,12 @@
 
     include("connection.php");  
 
-    $sql = "SELECT * FROM users";
-    $result = mysqli_query($conn, $sql);
-    $resultCheck = mysqli_num_rows($result);
+    // $sql = "SELECT * FROM users";
+    // $result = mysqli_query($conn, $sql);
+    // $resultCheck = mysqli_num_rows($result);
+
+    $pdoQuery = "SELECT * FROM users";
+    $pdoQuery_run = $pdo->query($pdoQuery);
 
     if($_SERVER['REQUEST_METHOD'] == "POST"){
         $user_gmail = $_POST['user_gmail'];
@@ -14,22 +17,41 @@
         $user_name = $_POST['user_name'];
         $flag = 0;
 
-        if($resultCheck > 0){
-            while($row = mysqli_fetch_assoc($result)){
-                if($user_gmail == $row['u_gmail']){
-                    $flag = 1;
-                    break;
-                }
-            }
-            if($flag == 0){
-                echo "hello?";
-                $values = array('u_name' => $user_name, 'u_gender' => $user_gender, 'u_class' => $user_class, 'u_password' => $password, 'u_gmail' => $user_gmail);
-                
-                $query = $fluent->insertInto('users', $values)->execute();
-    
-                header("Location: login.php");
+        
+        while($row = $pdoQuery_run->fetch()){
+            if($user_gmail == $row->u_gmail){
+                $flag = 1;
+                break;
             }
         }
+        if($flag == 0){
+            echo "hello?";
+            $values = array('u_name' => $user_name, 'u_gender' => $user_gender, 'u_class' => $user_class, 'u_password' => $password, 'u_gmail' => $user_gmail);
+            
+            $query = $fluent->insertInto('users', $values)->execute();
+
+            header("Location: login.php");
+        }
+        else{
+            echo '<script> alert("User existed")</script';
+        }
+
+        // if($resultCheck > 0){
+        //     while($row = mysqli_fetch_assoc($result)){
+        //         if($user_gmail == $row['u_gmail']){
+        //             $flag = 1;
+        //             break;
+        //         }
+        //     }
+        //     if($flag == 0){
+        //         echo "hello?";
+        //         $values = array('u_name' => $user_name, 'u_gender' => $user_gender, 'u_class' => $user_class, 'u_password' => $password, 'u_gmail' => $user_gmail);
+                
+        //         $query = $fluent->insertInto('users', $values)->execute();
+    
+        //         header("Location: login.php");
+        //     }
+        // }
     }
 
 ?>

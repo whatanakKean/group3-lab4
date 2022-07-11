@@ -24,6 +24,8 @@
       </tr>
     </thead>
   </table>
+  <br>
+  <a href="logout.php">Logout</a>
 </div>
 
 

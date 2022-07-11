@@ -2,25 +2,37 @@
     session_start();
     include("connection.php");  
 
-    $sql = "SELECT * FROM users";
-    $result = mysqli_query($conn, $sql);
-    $resultCheck = mysqli_num_rows($result);
+    // $sql = "SELECT * FROM users";
+    // $result = mysqli_query($conn, $sql);
+    // $resultCheck = mysqli_num_rows($result);
+    
+    $pdoQuery = "SELECT * FROM users";
+    $pdoQuery_run = $pdo->query($pdoQuery);
 
     if($_SERVER['REQUEST_METHOD'] == "POST"){
         $user_gmail = $_POST['user_gmail'];
         $user_password = $_POST['password'];
-
-        if($resultCheck > 0){
-            while($row = mysqli_fetch_assoc($result)){
-                if($user_gmail == $row['u_gmail'] && $user_password == $row['u_password']){
-                    $_SESSION['user_gmail'] = $row['u_gmail'];
-                    $_SESSION['user_id'] = $row['u_id'];
-                    header("Location: table.php");
-                }
+        
+        while($row = $pdoQuery_run->fetch()){
+            if($user_gmail == $row->u_gmail && $user_password == $row->u_password){
+                $_SESSION['user_gmail'] = $row->u_gmail;
+                $_SESSION['user_id'] = $row->u_id;
+                header("Location: table.php");
             }
-            echo "wrong";
         }
+        echo '<script> alert("Incorrect Info")</script';
 
+
+        // if($resultCheck > 0){
+        //     while($row = mysqli_fetch_assoc($result)){
+        //         if($user_gmail == $row['u_gmail'] && $user_password == $row['u_password']){
+        //             $_SESSION['user_gmail'] = $row['u_gmail'];
+        //             $_SESSION['user_id'] = $row['u_id'];
+        //             header("Location: table.php");
+        //         }
+        //     }
+        //     echo "wrong";
+        // }
         // header("Location: table.php");
     }
 
