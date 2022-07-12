@@ -2,12 +2,8 @@
     session_start();
     include("connection.php");  
 
-    // $sql = "SELECT * FROM products";
-    // $result = mysqli_query($conn, $sql);
-    // $resultCheck = mysqli_num_rows($result);
 
-    $pdoQuery = "SELECT * FROM products";
-    $pdoQuery_run = $pdo->query($pdoQuery);
+    $query = $fluent->from('products');
 
     if($_SERVER['REQUEST_METHOD'] == "POST"){
         $product_name = $_POST['product_name'];
@@ -15,7 +11,7 @@
         $product_price = $_POST['product_price'];
         $user_id = $_SESSION['user_id'];
         $flag = 0;
-        while($row = $pdoQuery_run->fetch()){
+        while($row = $query->fetch()){
             if($product_name == $row->p_name && $user_id == $row->u_id){
                 $flag = 1;
                 break;
@@ -23,32 +19,12 @@
         }
         if($flag == 0){
             $values = array('p_name' => $product_name, 'u_id' => $user_id,'p_amount' => $product_amount, 'p_price' => $product_price);
-
             $query = $fluent->insertInto('products', $values)->execute();
-    
             header("Location: table.php");
         }
         else{
             echo '<script> alert("Product existed")</script';
         }
-
-        // if($resultCheck > 0){
-        //     while($row = mysqli_fetch_assoc($result)){
-        //         if($product_name == $row['p_name'] && $user_id == $row['u_id']){
-        //             echo "PRODUCT EXIST!!!! *POP UP* <br> choose update to update product information";
-        //             $flag = 1;
-        //             break;
-        //         }
-        //     }
-        //     if($flag == 0){
-        //         $values = array('p_name' => $product_name, 'u_id' => $user_id,'p_amount' => $product_amount, 'p_price' => $product_price);
-
-        //         $query = $fluent->insertInto('products', $values)->execute();
-        //         $fluent->close();
-        
-        //         header("Location: table.php");
-        //     }
-        // }
     }
 
 ?>

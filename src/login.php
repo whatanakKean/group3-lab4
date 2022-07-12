@@ -2,18 +2,13 @@
     session_start();
     include("connection.php");  
 
-    // $sql = "SELECT * FROM users";
-    // $result = mysqli_query($conn, $sql);
-    // $resultCheck = mysqli_num_rows($result);
-    
-    $pdoQuery = "SELECT * FROM users";
-    $pdoQuery_run = $pdo->query($pdoQuery);
+    $query = $fluent->from('users');
 
     if($_SERVER['REQUEST_METHOD'] == "POST"){
         $user_gmail = $_POST['user_gmail'];
         $user_password = $_POST['password'];
         
-        while($row = $pdoQuery_run->fetch()){
+        while($row = $query->fetch()){
             if($user_gmail == $row->u_gmail && $user_password == $row->u_password){
                 $_SESSION['user_gmail'] = $row->u_gmail;
                 $_SESSION['user_id'] = $row->u_id;
@@ -21,19 +16,6 @@
             }
         }
         echo '<script> alert("Incorrect Info")</script';
-
-
-        // if($resultCheck > 0){
-        //     while($row = mysqli_fetch_assoc($result)){
-        //         if($user_gmail == $row['u_gmail'] && $user_password == $row['u_password']){
-        //             $_SESSION['user_gmail'] = $row['u_gmail'];
-        //             $_SESSION['user_id'] = $row['u_id'];
-        //             header("Location: table.php");
-        //         }
-        //     }
-        //     echo "wrong";
-        // }
-        // header("Location: table.php");
     }
 
 ?>
@@ -48,24 +30,24 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+    <div class="container my-5">
+        <h1>Login</h1>
+        <div class="mt-5">
+            <form action="" method="POST" style="margin-bottom: 10px;">
+                <div class="form-group">
+                    <label for="inputEmail1">Email address</label>
+                    <input type="email" class="form-control w-25" id="inputEmail1" name="user_gmail"aria-describedby="emailHelp" placeholder="Enter email" required >
+                </div>
 
-    <h1 style="margin: 30px 0px 0px 45px;">Login</h1>
-    <div style="padding: 30px 0px 0px 45px;">
-        <form action="" method="POST" style="margin-bottom: 10px;">
-            <div class="form-group">
-                <label for="inputEmail1">Email address</label>
-                <input type="email" class="form-control w-25" id="inputEmail1" name="user_gmail"aria-describedby="emailHelp" placeholder="Enter email" required >
-            </div>
-
-            <div class="form-group">
-                <label for="inputPassword1">Password</label>
-                <input type="password" class="form-control w-25" id="inputPassword1" name="password" placeholder="Password" required >
-            </div>
-            <button type="submit" class="btn btn-primary mr-2">Submit</button>
-            <button type="reset" class="btn btn-primary">Reset</button>
-        </form>
-        <a href="signup.php">Click to Sign Up</a>
+                <div class="form-group">
+                    <label for="inputPassword1">Password</label>
+                    <input type="password" class="form-control w-25" id="inputPassword1" name="password" placeholder="Password" required >
+                </div>
+                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                <button type="reset" class="btn btn-primary">Reset</button>
+            </form>
+            <a href="signup.php">Click to Sign Up</a>
+        </div>
     </div>
-
 </body>
 </html>
