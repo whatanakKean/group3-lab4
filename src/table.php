@@ -8,54 +8,54 @@
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-<?php include_once("header.php") ?>
+  <?php include_once("header.php") ?>
 
-<div class="container my-5">
-  <h2>Product Table</h2>
-  <table id="my-example">
-    <a class="btn btn-primary btn-sm my-1" href="create_product.php"> Add </a>
-    <thead>
-      <tr>
-          <th>Id</th>
-          <th>Name</th>
-          <th>Amount</th>
-          <th>Price</th>
-          <th>Actions</th>
-      </tr>
-    </thead>
-  </table>
-  <br>
-  <a href="logout.php">Logout</a>
-</div>
-
-
-</body>
+  <div class="container my-5">
+    <h2>Product Table</h2>
+    <table id="my-example">
+      <a class="btn btn-primary btn-sm my-1" href="create_product.php"> Add </a>
+      <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+      </thead>
+    </table>
+    <br>
+    <a href="logout.php">Logout</a>
+  </div>
 
 
-<script type="text/javascript">
-  $(document).ready(function() {
-      $('#my-example').DataTable({
-        "bProcessing": true,
-        "sAjaxSource": "getProducts.php",
-        "aoColumns": [
-              { mDataProp: 'p_id' } ,
-              { mDataProp: 'p_name' },
-              { mDataProp: 'p_amount'},
-              { mDataProp: 'p_price'},
-              {
-                "mData": null,
-                "bSortable": false,
-                "mRender": function ( data, type, row ) {
-                  return `<div>
-                            <a class="btn btn-info btn-sm" href="edit_product.php?id=` + row.p_id + `"> Edit </a>
-                            <a class="btn btn-danger btn-sm" href="delete_product.php?id=` + row.p_id + `"> Delete </a>
-                          </div>
-                          `;  
+  </body>
+
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('#my-example').DataTable({
+          "bProcessing": true,
+          "sAjaxSource": "getProducts.php",
+          "aoColumns": [
+                { mDataProp: 'p_id' } ,
+                { mDataProp: 'p_name' },
+                { mDataProp: 'p_amount'},
+                { mDataProp: 'p_price'},
+                {
+                  "mData": null,
+                  "bSortable": false,
+                  "mRender": function ( data, type, row ) {
+                    return `<div>
+                              <a class="btn btn-info btn-sm" href="edit_product.php?id=` + row.p_id + `"> Edit </a>
+                              <a class="btn btn-danger btn-sm" href="delete_product.php?id=` + row.p_id + `"> Delete </a>
+                            </div>
+                            `;  
+                  }
                 }
-              }
-            ],
-      });  
-  });
-  
-</script>
+              ],
+        });  
+    });
+    
+  </script>
 </html>

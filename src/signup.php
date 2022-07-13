@@ -45,9 +45,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-    <?php include_once("header.php") ?>
-    <h1 style="margin: 30px 0px 0px 45px;">Sign Up</h1>
-    <div style="padding: 30px 0px 0px 45px;">
+    <div class="container mt-4">
+    <h1 >Sign Up</h1>
+    <div>
         <form action="" method="POST" style="margin-bottom: 10px;">
             <div class="form-group">
                 <label for="inputEmail1">Email address</label>
@@ -86,6 +86,6 @@
         </form>
         <a href="login.php">Click to Login</a>
     </div>
-
+    </div>
 </body>
 </html>
