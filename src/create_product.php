@@ -2,8 +2,8 @@
     session_start();
     include("connection.php");  
 
-
-    $query = $fluent->from('products');
+    $pdoQuery = "SELECT * FROM products";
+    $pdoQuery_run = $pdo->query($pdoQuery);
 
     if($_SERVER['REQUEST_METHOD'] == "POST"){
         $product_name = $_POST['product_name'];
@@ -11,7 +11,7 @@
         $product_price = $_POST['product_price'];
         $user_id = $_SESSION['user_id'];
         $flag = 0;
-        while($row = $query->fetch()){
+        while($row = $pdoQuery_run->fetch()){
             if($product_name == $row->p_name && $user_id == $row->u_id){
                 $flag = 1;
                 break;
@@ -19,7 +19,9 @@
         }
         if($flag == 0){
             $values = array('p_name' => $product_name, 'u_id' => $user_id,'p_amount' => $product_amount, 'p_price' => $product_price);
+
             $query = $fluent->insertInto('products', $values)->execute();
+    
             header("Location: table.php");
         }
         else{
@@ -39,6 +41,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+    <?php include_once("header.php") ?>
     <div style="padding: 30px 0px 0px 45px;">
         <form action="" method="POST" style="margin-bottom: 10px;">
             <div class="form-group">
